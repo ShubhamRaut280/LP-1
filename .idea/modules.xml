@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/LP1_codes.iml" filepath="$PROJECT_DIR$/.idea/LP1_codes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pass1_Pass2/Pass1/Pass1.iml" filepath="$PROJECT_DIR$/Pass1_Pass2/Pass1/Pass1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pass1_Pass2/Pass2/Pass2.iml" filepath="$PROJECT_DIR$/Pass1_Pass2/Pass2/Pass2.iml" />
+    </modules>
+  </component>
+</project>
