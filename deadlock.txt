@@ -1,0 +1,83 @@
+import java.util.Scanner;
+
+public class DeadlockAvoidance {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int numResources = 4;
+        int numProcesses = 3;
+
+        int[] available = new int[]{3, 1, 1, 2};
+
+        int[][] maxMatrix = new int[][]{
+            {3, 3, 2, 2},
+            {1, 1, 3, 4},
+            {1, 3, 5, 0}
+        };
+
+        int[][] allocationMatrix = new int[][]{
+            {1, 2, 2, 1},
+            {1, 0, 3, 3},
+            {1, 2, 1, 0}
+        };
+
+        int[][] needMatrix = new int[numProcesses][numResources];
+
+        // Calculate the need matrix
+        for (int i = 0; i < numProcesses; i++) {
+            for (int j = 0; j < numResources; j++) {
+                needMatrix[i][j] = maxMatrix[i][j] - allocationMatrix[i][j];
+            }
+        }
+
+        boolean[] finish = new boolean[numProcesses];
+        int[] safeSequence = new int[numProcesses];
+        int count = 0;
+
+        while (count < numProcesses) {
+            boolean found = false;
+
+            for (int i = 0; i < numProcesses; i++) {
+                if (!finish[i]) {
+                    boolean canAllocate = true;
+
+                    for (int j = 0; j < numResources; j++) {
+                        if (needMatrix[i][j] > available[j]) {
+                            canAllocate = false;
+                            break;
+                        }
+                    }
+
+                    if (canAllocate) {
+                        for (int j = 0; j < numResources; j++) {
+                            available[j] += allocationMatrix[i][j];
+                        }
+
+                        safeSequence[count] = i;
+                        finish[i] = true;
+                        count++;
+                        found = true;
+                    }
+                }
+            }
+
+            if (!found) {
+                System.out.println("System is not in a safe state. Deadlock may occur.");
+                break;
+            }
+        }
+
+        if (count == numProcesses) {
+            System.out.println("System is in a safe state. Safe sequence:");
+
+            for (int i = 0; i < numProcesses; i++) {
+                System.out.print("P" + safeSequence[i]);
+                if (i < numProcesses - 1) {
+                    System.out.print(" -> ");
+                }
+            }
+        }
+
+        scanner.close();
+    }
+}
